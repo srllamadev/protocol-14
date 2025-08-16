@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocol 14 - DeFi con Inteligencia Artificial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Exo 2', 'Segoe UI', sans-serif;
+        }
+
+        :root {
+            --space-dark: #0a0a1a;
+            --neon-blue: #00f3ff;
+            --neon-purple: #bd00ff;
+            --electric-blue: #0066ff;
+            --deep-space: #060613;
+            --star-glow: rgba(255, 255, 255, 0.8);
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--deep-space), var(--space-dark));
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Fondo de estrellas */
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: var(--star-glow);
+            border-radius: 50%;
+        }
+
+        /* Secciones */
+        section {
+            min-height: 100vh;
+            padding: 80px 10%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hero Section */
+        #hero {
+            text-align: center;
+            padding-top: 120px;
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            opacity: 0.8;
+            z-index: -1;
+        }
+
+        .planet-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #ff00cc, #bd00ff, #0066ff);
+            top: 10%;
+            left: 10%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .planet-2 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #00f3ff, #00a2ff, #0066ff);
+            bottom: 15%;
+            right: 15%;
+            animation: float 12s infinite ease-in-out reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px rgba(189, 0, 255, 0.7);
+        }
+
+        /* Sobre el proyecto */
+        #about {
+            background: rgba(10, 10, 26, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        }
+
+        .ai-agents {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .agent-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .agent-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.2);
+            border-color: var(--neon-blue);
+        }
+
+        .agent-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--neon-blue);
+        }
+
+        .agent-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--neon-blue);
+        }
+
+        /* Tecnología */
+        #tech {
+            position: relative;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(189, 0, 255, 0.2);
+        }
+
+        .tech-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--electric-blue));
+            z-index: -1;
+            border-radius: 17px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tech-card:hover::before {
+            opacity: 1;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(189, 0, 255, 0.3);
+        }
+
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--neon-purple);
+        }
+
+        .tech-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        /* Demo */
+        #demo {
+            background: rgba(10, 10, 26, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        .demo-container {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .demo-video {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.2);
+            position: relative;
+            height: 400px;
+            background: linear-gradient(45deg, rgba(0, 102, 255, 0.1), rgba(189, 0, 255, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-video::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(0, 243, 255, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        .demo-placeholder {
+            font-size: 5rem;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        .demo-text {
+            flex: 1;
+        }
+
+        .features {
+            margin-top: 30px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            color: var(--neon-blue);
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+
+        /* Contacto */
+        #contact {
+            text-align: center;
+            padding-bottom: 100px;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        textarea.form-input {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Animaciones */
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(10px, 15px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(0, 243, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 243, 255, 0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .about-content,
+            .demo-container {
+                flex-direction: column;
+            }
+            
+            .logo {
+                font-size: 3.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.4rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .ai-agents {
+                grid-template-columns: 1fr;
+            }
+            
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .planet {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fondo de estrellas -->
+    <div id="stars"></div>
+    
+    <!-- Sección Hero -->
+    <section id="hero">
+        <div class="planet planet-1"></div>
+        <div class="planet planet-2"></div>
+        <div class="hero-content">
+            <h1 class="logo">PROTOCOL 14</h1>
+            <p class="tagline">Revolucionando DeFi con agentes de inteligencia artificial autónomos</p>
+            <a href="#demo" class="cta-button">Ver demostración</a>
+        </div>
+    </section>
+    
+    <!-- Sobre el proyecto -->
+    <section id="about">
+        <h2 class="section-title">Sobre Protocol 14</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Protocol 14 es una plataforma DeFi de última generación que integra agentes de IA avanzados para optimizar estrategias de inversión, gestión de riesgos y ejecución de transacciones.</p>
+                <p>Nuestros agentes inteligentes operan 24/7, analizando mercados en tiempo real, identificando oportunidades y ejecutando transacciones con precisión milimétrica.</p>
+                <p>Con Protocol 14, democratizamos el acceso a estrategias de inversión avanzadas previamente disponibles solo para instituciones financieras.</p>
+            </div>
+            <div class="ai-agents">
+                <div class="agent-card">
+                    <div class="agent-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="agent-title">Analista de Mercado</h3>
+                    <p>Analiza datos en tiempo real para predecir tendencias del mercado y oportunidades de inversión.</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="agent-title">Gestor de Riesgos</h3>
+                    <p>Protege tus inversiones con evaluaciones de riesgo en tiempo real y estrategias defensivas.</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="agent-title">Ejecutor de Transacciones</h3>
+                    <p>Ejecuta operaciones con precisión nanosegundaria aprovechando oportunidades efímeras.</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3 class="agent-title">Optimizador de Portafolio</h3>
+                    <p>Diversifica y optimiza automáticamente tu portafolio según tus objetivos de inversión.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Tecnología -->
+    <section id="tech">
+        <h2 class="section-title">Nuestra Tecnología</h2>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <i class="fab fa-ethereum"></i>
+                </div>
+                <h3 class="tech-title">Blockchain</h3>
+                <p>Infraestructura descentralizada en Ethereum con contratos inteligentes auditados.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="tech-title">IA Avanzada</h3>
+                <p>Modelos de aprendizaje profundo y redes neuronales para análisis predictivo.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="tech-title">Seguridad</h3>
+                <p>Encriptación de grado militar y arquitectura de seguridad de múltiples capas.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="tech-title">Rendimiento</h3>
+                <p>Ejecución de alta velocidad con latencia mínima para aprovechar cada oportunidad.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Demo -->
+    <section id="demo">
+        <h2 class="section-title">Demostración</h2>
+        <div class="demo-container">
+            <div class="demo-video">
+                <div class="demo-placeholder">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+            </div>
+            <div class="demo-text">
+                <p>Observa cómo nuestros agentes de IA operan en tiempo real, tomando decisiones de inversión basadas en análisis de mercado complejos.</p>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Actualizaciones en Tiempo Real</h3>
+                            <p>Datos de mercado actualizados cada milisegundo para decisiones precisas.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div>
+                            <h3>Personalización Total</h3>
+                            <p>Configura tus agentes según tu perfil de riesgo y objetivos financieros.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <div>
+                            <h3>Historial Transparente</h3>
+                            <p>Todas las operaciones registradas en blockchain para total transparencia.</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="cta-button" style="margin-top: 30px;">Probar Demo Interactiva</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contacto -->
+    <section id="contact">
+        <h2 class="section-title">Únete a la Revolución</h2>
+        <p style="font-size: 1.3rem; max-width: 600px; margin: 0 auto 40px;">Regístrate para acceso temprano y actualizaciones exclusivas</p>
+        
+        <form class="contact-form">
+            <div class="form-group">
+                <input type="text" class="form-input" placeholder="Nombre" required>
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-input" placeholder="Correo Electrónico" required>
+            </div>
+            <div class="form-group">
+                <textarea class="form-input" placeholder="¿Qué te interesa más de Protocol 14?"></textarea>
+            </div>
+            <button type="submit" class="cta-button">Enviar Solicitud</button>
+        </form>
+        
+        <div style="margin-top: 50px;">
+            <p style="margin-bottom: 20px;">Síguenos para más actualizaciones</p>
+            <div style="font-size: 2rem;">
+                <a href="#" style="color: var(--neon-blue); margin: 0 15px;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="color: var(--neon-blue); margin: 0 15px;"><i class="fab fa-discord"></i></a>
+                <a href="#" style="color: var(--neon-blue); margin: 0 15px;"><i class="fab fa-github"></i></a>
+                <a href="#" style="color: var(--neon-blue); margin: 0 15px;"><i class="fab fa-medium"></i></a>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        // Crear estrellas para el fondo
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starsCount = 200;
+            
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Posición aleatoria
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Opacidad aleatoria
+                star.style.opacity = Math.random() * 0.8 + 0.2;
+                
+                // Animación
+                const duration = Math.random() * 10 + 5;
+                star.style.animation = `pulse ${duration}s infinite`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Animación al hacer scroll
+        function initScrollAnimations() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observar elementos que queremos animar
+            document.querySelectorAll('.agent-card, .tech-card, .feature').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            initScrollAnimations();
+            
+            // Efecto hover en botones
+            const buttons = document.querySelectorAll('.cta-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    button.style.animation = 'pulse 1.5s infinite';
+                });
+                
+                button.addEventListener('mouseleave', () => {
+                    button.style.animation = '';
+                });
+            });
+            
+            // Efecto de desplazamiento suave para enlaces
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
