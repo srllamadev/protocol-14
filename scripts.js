@@ -1,4 +1,4 @@
- // Crear estrellas para el fondo
+// Crear estrellas para el fondo
 function createStars() {
     const starsContainer = document.getElementById('stars');
     const starsCount = 200;
@@ -77,6 +77,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     behavior: 'smooth'
                 });
             }
+        });
+    });
+    
+    // Movimiento de naves espaciales
+    const spacecrafts = document.querySelectorAll('.spacecraft');
+    spacecrafts.forEach((spacecraft) => {
+        spacecraft.addEventListener('mouseover', () => {
+            spacecraft.style.transform = 'scale(1.2)';
+        });
+        spacecraft.addEventListener('mouseout', () => {
+            spacecraft.style.transform = 'scale(1)';
         });
     });
 });
